@@ -1,0 +1,5 @@
+{
+    "SECRET_KEY": "b'\\x1c\\xfdVg\\xa5\\xaa\\xb2\\x11/=II\\xfex\\xd5f'",
+    "SQLALCHEMY_DATABASE_URI": "sqlite:///D:\\project\\python\\Stock_Situation_Room\\stock_situation_room\\StockSituationRoom\\sqlite.db",
+    "SQLALCHEMY_TRACK_MODIFICATIONS": "False"
+}
