@@ -11,3 +11,4 @@ from StockSituationRoom import model
 model.db.create_all()
 
 from StockSituationRoom import route
+from StockSituationRoom import crawl
