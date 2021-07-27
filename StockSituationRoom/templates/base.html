@@ -3,13 +3,25 @@
     <head>
         <meta charset="utf-8">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
         {% if title %}
-            <title>StockSituationRoom - {{ title }}</title>
+            <title>{{ title }}</title>
         {% else %}
             <title>StockSituationRoom</title>
         {% endif %}      
     </head>
     <body>
-        <h1>Creating!</h1>
+        <div class="container">
+             <h1 class="h1">股海無涯</h1>
+             <hr>
+             {% block content %} {% endblock %}
+        </div>
+        <script type="text/javascript"  src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+         {% block scripts  %} {% endblock scripts  %}         
     </body>
 </html>

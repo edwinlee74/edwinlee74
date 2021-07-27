@@ -92,46 +92,13 @@ def revenue_to_db(year: int, month: int) -> None:
           MonthRevenue.query.filter(MonthRevenue.year==year_roc,
                       MonthRevenue.stock_no==revenue.get('stock_no')).update(
                          {month_enum[month]:revenue.get('revenue')})
-          db.session.commit()
        else:
-          if month == 1:
-             item = MonthRevenue(year=year_roc, january=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 2:
-             item = MonthRevenue(year=year_roc, february=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 3:
-             item = MonthRevenue(year=year_roc, march=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 4:
-             item = MonthRevenue(year=year_roc, april=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 5:
-             item = MonthRevenue(year=year_roc, may=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 6:
-             item = MonthRevenue(year=year_roc, june=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 7:
-             item = MonthRevenue(year=year_roc, july=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 8:
-             item = MonthRevenue(year=year_roc, august=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 9:
-             item = MonthRevenue(year=year_roc, september=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 10:
-             item = MonthRevenue(year=year_roc, october=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 11:
-             item = MonthRevenue(year=year_roc, november=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
-          if month == 12:
-             item = MonthRevenue(year=year_roc, december=revenue.get('revenue'),
-                       stock_no=revenue.get('stock_no'))
+          item_data = {'year':year_roc, 
+                                month_enum[month]:revenue.get('revenue'),
+                                'stock_no':revenue.get('stock_no')}
+          item = MonthRevenue(**item_data)
           db.session.add(item)
-          db.session.commit()
+    db.session.commit()
 
 def grab_stock_name_tesk():
     company_list = parse_company_list()
@@ -145,14 +112,15 @@ def grab_stock_name_tesk():
                       category=company.get('category')
                )
        db.session.add(item)
-       db.session.commit()
+    db.session.commit()
 
 def get_company_revenue_task():
-    #parse_company_revenue()
-    pass
+    today = date.today()
+    for month in range(1,this_month):
+        revenue_to_db(year=today.year,month=today.month)
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=grab_stock_name_tesk, trigger='cron', minute='*/30')
-scheduler.add_job(func=get_company_revenue_task, trigger='cron', minute='*/2')
+scheduler.add_job(func=grab_stock_name_tesk, trigger='cron', day='1')
+scheduler.add_job(func=get_company_revenue_task, trigger='cron', day='20')
 scheduler.start()
 atexit.register(lambda: scheduler.shutdown())

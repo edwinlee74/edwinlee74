@@ -6,6 +6,14 @@ class Company(db.Model):
     listing_date = db.Column(db.String(10))
     category = db.Column(db.String(30))
     
+    def to_dict(self) -> dict:
+        return {
+            'stock_no': self.stock_no,
+            'company_name': self.company_name,
+            'listing_date': self.listing_date,
+            'category': self.category
+        }
+
     def __repr__(self) -> str:
         return '<Company %r %r>' %(self.stock_no, self.company_name)
 
